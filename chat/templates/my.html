@@ -20,4 +20,22 @@
         var socket = Notifications(host);
     </script>
 {% endif %}
+{#{% if request.user.is_authenticated %}#}
+    <script>
+        var notificationCount = 0;
+        var Notifications = function(url) {
+            socket = new WebSocket(url + '?user_id=' + 1);
+
+            socket.onopen = function() {
+                console.log('Successful Connection To Server.');
+            };
+            socket.onmessage = function (event) {
+                notificationCount += 1;
+                $('#count').html(notificationCount);
+            }
+        };
+        var host = 'ws://localhost:3000/client';
+        var socket = Notifications(host);
+    </script>
+{#{% endif %}#}
 </html>

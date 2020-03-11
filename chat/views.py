@@ -25,7 +25,7 @@ def chat_index(request):
     }
 
     # and returns it to the page
-    return render(request, 'chat_index.html', context)
+    return render(request, 'my.html', context)
 
 # this view must be csrf exempted to be able to accept XMLHttpRequests
 @csrf_exempt
