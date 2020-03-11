@@ -1,0 +1,5 @@
+# Project exclude paths
+/node/node_modules/
+/node_chat/node_modules/
+/env/
+/.idea/

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="count"></div>
+</body>
+{% if request.user.is_authenticated %}
+    <script>
+        var Notifications = function(url) {
+            socket = new WebSocket(url + '?user_id=' + {{ request.user.id }});
+
+            socket.onopen = function() {
+                console.log('Successful Connection To Server.');
+            };
+        };
+        var host = 'ws://localhost:3000/client';
+        var socket = Notifications(host);
+    </script>
+{% endif %}
+</html>
