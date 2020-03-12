@@ -43,10 +43,12 @@ wssClient.on('connection', (socket, request) => {
 });
 
 app.get('/new/:user_id', (req, res) => {
-  let userId = req.params.user_id;
-  let socket = userSockets[userId];
-  if (typeof(socket) !== "undefined") {
-    socket.send('')
-  }
-  res.send("")
+    let userId = req.params.user_id;
+    console.log('userId' + userId);
+    let socket = userSockets[userId];
+    console.log('socket: ' + socket);
+    if (typeof (socket) !== "undefined") {
+        socket.send('')
+    }
+    res.send("")
 });

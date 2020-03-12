@@ -16,6 +16,7 @@ def notification_message_post_save(sender, instance=None, created=None, **kwargs
 
 @shared_task(ignore_result=True)
 def create_message_notifications(message_id):
+    print('got')
     try:
         message = Message.objects.get(id=message_id)
     except Message.DoesNotExist:
@@ -23,5 +24,5 @@ def create_message_notifications(message_id):
     if not message:
         return
 
-    notification = Notification.objects.create(message=message)
-    requests.get('http://localhost:3000/new/{}'.format(notification.user))
+    # notification = Notification.objects.create(message=message)
+    requests.get('http://localhost:3000/new/{}'.format(1))

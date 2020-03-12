@@ -54,7 +54,7 @@
 <script>
 
     // host of the server
-    var protocol = window.location.protocol;
+    {% comment %}var protocol = window.location.protocol;
     var host = new URL(window.location.origin);
     host.port = '';
     host = host.origin;
@@ -66,7 +66,7 @@
     // when the document is ready, scrolls down the page to the last page if there are messages
     $(function() {
         updateScroll();
-    });
+    });{% endcomment %}
 
     // on the form submit
     $('form').submit(function(e) {
@@ -82,9 +82,30 @@
                 'user_name': name.val().trim(),
                 'message': msg.val().trim()
             };
+            console.log(JSON.stringify(msgObject));
+
+            $.ajax({
+                url: '/save_message/',
+                type: 'POST',
+                data: {
+                    'data': JSON.stringify(msgObject)
+                },
+                success: function (msgObject) {
+                    console.log(msgObject);
+                    var name = msgObject.user_name;
+                    var msg = msgObject.message;
+
+                    var icon = $('<span class="input-group-addon" style="text-shadow: 1px 1px 1px #000; background-color: rgb(66, 133, 244); color: #fff" ></span>').append(name);
+                    var msgItem = $('<input type="text" class="form-control" readonly style="background-color: #fff" />').val(msg);
+                    var input_group = $('<div class="input-group"></div>').append(icon, msgItem);
+
+                    // appends the message to the screen
+                    $('#messages-list').append(input_group);
+                }
+            });
 
             // emits the msgObject to the server
-            socket.emit('message', msgObject);
+            {#socket.emit('message', msgObject);#}
         }
 
         // clear the message element
@@ -94,7 +115,7 @@
     });
 
     // receives the message object from the server
-    socket.on('getMessage', function(msgObject) {
+    {% comment %}socket.on('getMessage', function(msgObject) {
         // gets the fields of the message
         var name = msgObject.user_name;
         var msg = msgObject.message;
@@ -113,7 +134,7 @@
     function updateScroll(){
         var element = document.getElementById("messages-list");
         element.scrollTop = element.scrollHeight;
-    }
+    }{% endcomment %}
 </script>
 
 </body>

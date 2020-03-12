@@ -17,8 +17,7 @@ io.on('connection', function(socket) {
     // it emits for every connected client that a message has been sent, sending the message to the event
     // 'getMessage' in the client side
     socket.on('message', function(msgObject) {
-        // emits the msgObject to the client
-        io.emit('getMessage', msgObject);
+
 
         // url of the view that will process, in this case, it is the save_message view, located on the app 'chat'
         var url = 'http://' + host +':' + port + '/save_message/';
@@ -31,8 +30,11 @@ io.on('connection', function(socket) {
                 if(xhttp.responseText === "error")
                     console.log("error saving message");
                 // if the value returned from the view is success
-                else if(xhttp.responseText === "success")
+                else if(xhttp.responseText === "success") {
                     console.log("the message was posted successfully");
+                    // emits the msgObject to the client
+                    io.emit('getMessage', msgObject);
+                }
             }
         };
 
