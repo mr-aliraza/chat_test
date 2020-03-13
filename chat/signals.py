@@ -29,8 +29,10 @@ def create_message_notifications(message_id):
     payload = {'user_id': 1, 'user': message.user_name, 'message': message.message}
 
     # notification = Notification.objects.create(message=message)
-    url = 'http://localhost:3000/new/{}'.format(payload)
+    # url = 'http://localhost:3000/new/{}'.format(payload)
+    url = 'http://localhost:3000/new/{}'.format(1)
     # print(url)
     # requests.
-    requests.get(url)
+    r = requests.post(url, data=payload)
+    print(r.text)
     # requests.get('http://localhost:3000/new/{}'.format(1))
