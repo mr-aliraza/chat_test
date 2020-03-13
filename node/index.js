@@ -42,13 +42,24 @@ wssClient.on('connection', (socket, request) => {
     console.log("Connection established for user " + userId)
 });
 
-app.get('/new/:user_id', (req, res) => {
-    let userId = req.params.user_id;
-    console.log('userId' + userId);
+app.get('/new/:message', (req, res) => {
+    const msg = JSON.parse(req.params.message);
+    let userId = msg.user_id;
     let socket = userSockets[userId];
-    console.log('socket: ' + socket);
     if (typeof (socket) !== "undefined") {
-        socket.send('')
+        JSON.stringify(msg);
+        socket.send(JSON.stringify(msg))
     }
     res.send("")
 });
+
+// app.get('/new/:user_id&:message', (req, res) => {
+//     let userId = req.params.user_id;
+//     console.log('userId' + userId);
+//     let socket = userSockets[userId];
+//     console.log('socket: ' + socket);
+//     if (typeof (socket) !== "undefined") {
+//         socket.send('')
+//     }
+//     res.send("")
+// });

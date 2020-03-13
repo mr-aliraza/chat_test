@@ -4,7 +4,9 @@ import requests
 
 
 from celery import shared_task
-from chat.models import Message, Notification
+import json
+
+from chat.models import Message
 
 
 @receiver(post_save, sender=Message, dispatch_uid='notification_message_post_save')
@@ -24,5 +26,11 @@ def create_message_notifications(message_id):
     if not message:
         return
 
+    payload = {'user_id': 1, 'user': message.user_name, 'message': message.message}
+
     # notification = Notification.objects.create(message=message)
-    requests.get('http://localhost:3000/new/{}'.format(1))
+    url = 'http://localhost:3000/new/{}'.format(payload)
+    # print(url)
+    # requests.
+    requests.get(url)
+    # requests.get('http://localhost:3000/new/{}'.format(1))
